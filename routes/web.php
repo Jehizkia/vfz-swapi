@@ -15,7 +15,13 @@ use Illuminate\Support\Facades\Http;
 */
 
 Route::get('/', function () {
-    $res = Http::get('https://swapi.dev/api/people/')->object();
+    $res = Http::get('https://swapi.dev/api/species/1')->object();
     dd($res);
+    return view('welcome');
+});
+
+Route::get('/p', function () {
+    $person = \App\Models\Specie::first();
+    dd($person->planet->name);
     return view('welcome');
 });

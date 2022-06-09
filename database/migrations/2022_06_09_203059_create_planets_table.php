@@ -13,16 +13,18 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('people', function (Blueprint $table) {
+        Schema::create('planets', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
             $table->string('name');
-            $table->string('height');
-            $table->string('hair_color');
-            $table->string('mass');
-            $table->string('birth_year');
-            $table->string('gender');
-            $table->foreignId('planet_id');
+            $table->string('rotation_period');
+            $table->string('orbital_period');
+            $table->string('diameter');
+            $table->string('climate');
+            $table->string('gravity');
+            $table->string('terrain');
+            $table->string('surface_water');
+            $table->string('population');
         });
     }
 
@@ -33,6 +35,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('people');
+        Schema::dropIfExists('planets');
     }
 };

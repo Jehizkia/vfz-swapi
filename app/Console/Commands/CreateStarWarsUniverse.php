@@ -3,6 +3,8 @@
 namespace App\Console\Commands;
 
 use App\Models\Person;
+use App\Models\Planet;
+use App\Models\Specie;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Http;
 
@@ -29,7 +31,9 @@ class CreateStarWarsUniverse extends Command
      */
     public function handle()
     {
+        $this->insertAllPlanets();
         $this->insertAllPeople();
+        $this->insertAllSpecies();
 
         $this->info('We have created the StarWars universe 🌟');
 
@@ -38,50 +42,87 @@ class CreateStarWarsUniverse extends Command
 
     public function insertAllPeople()
     {
-        $this->info('Getting all people');
+        $this->info('Getting all people  👥');
         $allPeople = $this->getAllEntitiesByCategory('people');
+
         foreach ($allPeople as $key => $person) {
-            $newPerson = Person::create([
-                'id' => ($key + 1),
+            Person::create([
+                'id' => $this->getEntityIdByUrl($person->url),
                 'name' => $person->name,
                 'height' => $person->height,
                 'hair_color' => $person->hair_color,
                 'mass' => $person->mass,
                 'birth_year' => $person->birth_year,
                 'gender' => $person->gender,
+                'planet_id' => $this->getEntityIdByUrl($person->homeworld)
             ]);
         }
+
+        $this->info('Retrieved all people 👥');
     }
 
     public function insertAllPlanets()
     {
-        $person = $this->getEntityIdByUrl('https://swapi.dev/api/people/');
-//        $peopleResponse = Http::get('https://swapi.dev/api/people/')->object();
-//
-//        foreach ($peopleResponse->results as $key => $person) {
-//            $newPerson = Person::create([
-//                'id' => ($key + 1),
-//                'name' => $person->name,
-//                'height' => $person->height,
-//                'hair_color' => $person->hair_color,
-//                'mass' => $person->mass,
-//                'birth_year' => $person->birth_year,
-//                'gender' => $person->gender,
-//            ]);
-//        }
+        $this->info('Getting all planets 🪐');
+        $allPlanets = $this->getAllEntitiesByCategory('planets');
+
+        foreach ($allPlanets as $key => $planet) {
+            $id = $this->getEntityIdByUrl($planet->url);
+            Planet::create([
+                'id' => $id,
+                'name' => $planet->name,
+                'rotation_period' => $planet->rotation_period,
+                'orbital_period' => $planet->orbital_period,
+                'diameter' => $planet->diameter,
+                'climate' => $planet->climate,
+                'gravity' => $planet->gravity,
+                'terrain' => $planet->terrain,
+                'population' => $planet->population,
+                'surface_water' => $planet->surface_water,
+            ]);
+        }
+
+        $this->info('Retrieved all planets');
     }
 
-    public function getTotalPagesByCategory($category) {
+    public function insertAllSpecies()
+    {
+        $this->info('Getting all planets 🪐');
+        $allSpecies = $this->getAllEntitiesByCategory('species');
+
+        foreach ($allSpecies as $key => $specie) {
+            Specie::create([
+                'id' => $this->getEntityIdByUrl($specie->url),
+                'name' => $specie->name,
+                'classification' => $specie->classification,
+                'designation' => $specie->designation,
+                'average_height' => $specie->average_height,
+                'skin_colors' => $specie->skin_colors,
+                'hair_colors' => $specie->hair_colors,
+                'eye_colors' => $specie->eye_colors,
+                'average_lifespan' => $specie->average_lifespan,
+                'language' => $specie->language,
+                'planet_id' => isset($specie->homeworld) ? $this->getEntityIdByUrl($specie->homeworld) : null
+            ]);
+        }
+
+        $this->info('Retrieved all planets 👽');
+    }
+
+    public function getTotalPagesByCategory($category)
+    {
         $pageResponse = Http::get("https://swapi.dev/api/{$category}/")->object();
         return ceil($pageResponse->count / count($pageResponse->results));
     }
 
-    public function getEntitiesByCategory($category, $pageNumber) {
+    public function getEntitiesByCategory($category, $pageNumber)
+    {
         $entityResponse = Http::get("https://swapi.dev/api/{$category}/?page={$pageNumber}")->object();
         return (isset($entityResponse->results)) ? $entityResponse->results : null;
     }
 
-    public function getAllEntitiesByCategory($category) {
+    public function getAllEntitiesByCategory($category)
+    {
         $allEntities = [];
         $totalPages = $this->getTotalPagesByCategory($category);
 
@@ -96,7 +137,10 @@ class CreateStarWarsUniverse extends Command
         return $allEntities;
     }
 
-    public function getEntityIdByUrl($url) {
-
+    public function getEntityIdByUrl($url)
+    {
+        $parsed_url = parse_url($url, PHP_URL_PATH);
+        preg_match_all('/\d+/', $parsed_url, $matches);
+        return $matches[0][0];
     }
 }
