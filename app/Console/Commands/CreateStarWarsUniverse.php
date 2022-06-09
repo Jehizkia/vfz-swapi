@@ -85,17 +85,6 @@ class CreateStarWarsUniverse extends Command
         $this->info('Retrieved all planets');
     }
 
-    public function connectSpecieWithPerson($specie) {
-        foreach ($specie->people as $person) {
-            $person = Person::findOr($this->getEntityIdByUrl($person), function () {
-               $this->info('Count not locate entity :(');
-            });
-
-            $person->specie_id = $this->getEntityIdByUrl($specie->url);
-            $person->save();
-        }
-    }
-
     public function insertAllSpecies()
     {
         $this->info('Getting all species 👽');
@@ -120,6 +109,17 @@ class CreateStarWarsUniverse extends Command
         }
 
         $this->info('Retrieved all species 👽');
+    }
+
+    public function connectSpecieWithPerson($specie) {
+        foreach ($specie->people as $person) {
+            $person = Person::findOr($this->getEntityIdByUrl($person), function () {
+                $this->info('Count not locate entity :(');
+            });
+
+            $person->specie_id = $this->getEntityIdByUrl($specie->url);
+            $person->save();
+        }
     }
 
     public function getTotalPagesByCategory($category)

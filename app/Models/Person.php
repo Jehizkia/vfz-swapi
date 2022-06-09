@@ -9,6 +9,7 @@ class Person extends Model
 {
     use HasFactory;
     protected $guarded = [];
+    protected $with = ['specie', 'planet'];
 
     public function planet() {
         return $this->belongsTo(Planet::class);
