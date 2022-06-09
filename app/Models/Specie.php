@@ -14,7 +14,7 @@ class Specie extends Model
         return $this->belongsTo(Planet::class);
     }
 
-    public function species() {
+    public function people() {
         return $this->hasMany(Person::class);
     }
 }
