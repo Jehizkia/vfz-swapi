@@ -1,5 +1,7 @@
 <?php
 
+use App\Models\Person;
+use App\Models\Planet;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Http;
 
@@ -15,13 +17,23 @@ use Illuminate\Support\Facades\Http;
 */
 
 Route::get('/', function () {
-    $res = Http::get('https://swapi.dev/api/species/1')->object();
-    dd($res);
-    return view('welcome');
+    $people = cache()->remember('people', now()->addDay(), function () {
+        return Person::all();
+    });
+
+    return view('index', ['people' => $people]);
 });
 
-Route::get('/p', function () {
-    $planet = \App\Models\Planet::find(40);
-    dd($planet->species);
-    return view('welcome');
+Route::get('/planets', function () {
+    $planets = cache()->remember('planets', now()->addDay(), function () {
+        return Planet::all();
+    });
+
+    return view('show-planets', ['planets' => $planets]);
 });
+
+
+Route::get('/people/{id}', function ($id) {
+    return view('show-person', ['person' => Person::findOrFail($id)]);
+});
+
