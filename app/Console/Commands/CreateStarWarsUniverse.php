@@ -85,9 +85,20 @@ class CreateStarWarsUniverse extends Command
         $this->info('Retrieved all planets');
     }
 
+    public function connectSpecieWithPerson($specie) {
+        foreach ($specie->people as $person) {
+            $person = Person::findOr($this->getEntityIdByUrl($person), function () {
+               $this->info('Count not locate entity :(');
+            });
+
+            $person->specie_id = $this->getEntityIdByUrl($specie->url);
+            $person->save();
+        }
+    }
+
     public function insertAllSpecies()
     {
-        $this->info('Getting all planets 🪐');
+        $this->info('Getting all species 👽');
         $allSpecies = $this->getAllEntitiesByCategory('species');
 
         foreach ($allSpecies as $key => $specie) {
@@ -104,9 +115,11 @@ class CreateStarWarsUniverse extends Command
                 'language' => $specie->language,
                 'planet_id' => isset($specie->homeworld) ? $this->getEntityIdByUrl($specie->homeworld) : null
             ]);
+
+            $this->connectSpecieWithPerson($specie);
         }
 
-        $this->info('Retrieved all planets 👽');
+        $this->info('Retrieved all species 👽');
     }
 
     public function getTotalPagesByCategory($category)

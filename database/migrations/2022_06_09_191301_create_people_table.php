@@ -23,6 +23,7 @@ return new class extends Migration
             $table->string('birth_year');
             $table->string('gender');
             $table->foreignId('planet_id');
+            $table->foreignId('specie_id')->default(null)->nullable();
         });
     }
 

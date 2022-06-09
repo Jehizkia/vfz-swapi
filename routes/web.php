@@ -21,7 +21,7 @@ Route::get('/', function () {
 });
 
 Route::get('/p', function () {
-    $person = \App\Models\Specie::first();
-    dd($person->planet->name);
+    $person = \App\Models\Person::find(2);
+    dd($person->specie->name);
     return view('welcome');
 });
