@@ -1,28 +1,6 @@
-<!doctype html>
-<html>
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="https://cdn.tailwindcss.com"></script>
-</head>
-<body class="bg-gray-900">
+@extends('layouts.app')
 
-
-<div class="container mx-auto">
-    <h1 class="text-4xl font-bold text-center mt-24 text-yellow-300">
-        StarWars Universe
-    </h1>
-
-    <p class="text-center text-gray-300 text-lg mt-3">Learn more about our universe</p>
-
-    <div class="flex justify-center mt-4">
-        <ul class="text-4xl space-x-4 ">
-            <a href="/" class="text-yellow-300 underline hover:text-yellow-300 transition-colors">People</a>
-            <a href="/planets" class="text-gray-500 hover:text-yellow-300 transition-colors">Planets</a>
-            <a href="/species" class="text-gray-500 hover:text-yellow-300 transition-colors">Species</a>
-        </ul>
-    </div>
-
+@section('content')
     <div class="mt-8 grid gap-4 grid-cols-3 flex-wrap">
         @foreach($people as $person)
             <a href="/people/{{ $person->id }}"
@@ -55,6 +33,4 @@
             </a>
         @endforeach
     </div>
-</div>
-</body>
-</html>
+@endsection

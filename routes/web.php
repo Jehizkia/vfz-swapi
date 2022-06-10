@@ -23,7 +23,7 @@ Route::get('/', function () {
     });
 
     return view('index', ['people' => $people]);
-});
+})->name('index');
 
 Route::get('/planets', function () {
     $planets = cache()->remember('planets', now()->addDay(), function () {
@@ -31,7 +31,7 @@ Route::get('/planets', function () {
     });
 
     return view('show-planets', ['planets' => $planets]);
-});
+})->name('planets');
 
 Route::get('/species', function () {
     $species = cache()->remember('species', now()->addDay(), function () {
@@ -39,9 +39,9 @@ Route::get('/species', function () {
     });
 
     return view('show-species', ['species' => $species]);
-});
+})->name('species');
 
 Route::get('/people/{id}', function ($id) {
     return view('show-person', ['person' => Person::findOrFail($id)]);
-});
+})->name('people');
 

@@ -1,22 +1,8 @@
-<!doctype html>
-<html>
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="https://cdn.tailwindcss.com"></script>
-</head>
-<body class="bg-gray-900">
+@extends('layouts.app')
 
-
-<div class="container mx-auto">
-    <h1 class="text-4xl font-bold text-center mt-24 text-yellow-300">
-        StarWars Universe
-    </h1>
-
-    <p class="text-center text-gray-300 text-lg mt-3">Learn more about our universe</p>
-
+@section('content')
     <div
-        class="w-full mt-5 bg-gray-200 rounded-2xl shadow-xl shad p-4 shadow-gray-800 border-4 border-gray-200 ">
+        class="w-full mt-8 bg-gray-200 rounded-2xl shadow-xl shad p-4 shadow-gray-800 border-4 border-gray-200 ">
 
         <p class="font-bold text-2xl text-gray-800">
             {{ $person->name }}
@@ -71,6 +57,4 @@
         @endif
 
     </div>
-</div>
-</body>
-</html>
+@endsection
