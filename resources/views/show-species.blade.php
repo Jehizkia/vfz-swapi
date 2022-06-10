@@ -19,41 +19,39 @@
     <div class="flex justify-center mt-4">
         <ul class="text-4xl space-x-4 ">
             <a href="/" class="text-gray-500 hover:text-yellow-300 transition-colors">People</a>
-            <a href="/planets" class=" text-yellow-300 underline hover:text-yellow-300 transition-colors">Planets</a>
-            <a href="/species" class="text-gray-500 hover:text-yellow-300 transition-colors">Species</a>
+            <a href="/planets" class="text-gray-500 hover:text-yellow-300 transition-colors">Planets</a>
+            <a href="/species" class=" text-yellow-300 underline hover:text-yellow-300 transition-colors">Species</a>
         </ul>
     </div>
 
     <div class="mt-8 grid gap-4 grid-cols-3 flex-wrap">
-        @foreach($planets as $planet)
+        @foreach($species as $specie)
             <div
-               class="transition-all bg-gray-200 rounded-2xl shadow-xl shad p-4 shadow-gray-800 border-4 border-gray-200 ">
+                class="transition-all bg-gray-200 rounded-2xl shadow-xl shad p-4 shadow-gray-800 border-4 border-gray-200 ">
 
                 <p class="font-bold text-2xl text-gray-800">
-                    {{ $planet->name }}
+                    {{ $specie->name }}
                 </p>
 
                 <ul class="mt-3 text-gray-700">
-                    <li><span class="font-bold">Population:</span> {{ $planet->population }}</li>
-                    <li><span class="font-bold">Climate:</span> {{ $planet->climate }}</li>
-                    <li><span class="font-bold">Terrain:</span> {{ $planet->terrain }}</li>
-                    @if(count($planet->species))
-                        <li>
-                            <span class="font-bold">Species:</span> {{ $planet->species->pluck('name')->implode(', ') }}
-                        </li>
-                    @endif
+                    <li><span class="font-bold">Language:</span> {{ $specie->language }}</li>
+                    <li><span class="font-bold">Average lifespan:</span> {{ $specie->average_lifespan }}</li>
+                    <li><span class="font-bold">Classification:</span> {{ $specie->classification }}</li>
+                    @isset($species->planet)
+                    <li><span class="font-bold">Planet:</span> {{ $specie->planet->name }}</li>
+                    @endisset
                 </ul>
 
-                @if(count($planet->people) > 0)
+                @if(count($specie->people) > 0)
                     <div class="mt-4" x-data="{showPeople: false}">
                         <button @click="showPeople= !showPeople" class="font-bold transition-color underline hover:text-yellow-500">
-                         <span x-show="!showPeople">Show</span>
-                         <span x-show="showPeople">Hide</span>
-                            people that live here
+                            <span x-show="!showPeople">Show</span>
+                            <span x-show="showPeople">Hide</span>
+                            people
                         </button>
 
                         <ul class="bg-gray-300 shadow-inner rounded-lg p-4 mt-4" x-show="showPeople">
-                            @foreach($planet->people as $person)
+                            @foreach($specie->people as $person)
                                 <li><a class="transition-color hover:underline hover:text-yellow-500" href="/people/{{ $person->id }}">{{ $person->name }}</a></li>
                             @endforeach
                         </ul>

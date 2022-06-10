@@ -19,7 +19,7 @@
         <ul class="text-4xl space-x-4 ">
             <a href="/" class="text-yellow-300 underline hover:text-yellow-300 transition-colors">People</a>
             <a href="/planets" class="text-gray-500 hover:text-yellow-300 transition-colors">Planets</a>
-            <a href="#" class="text-gray-500 hover:text-yellow-300 transition-colors">Species</a>
+            <a href="/species" class="text-gray-500 hover:text-yellow-300 transition-colors">Species</a>
         </ul>
     </div>
 

@@ -2,6 +2,7 @@
 
 use App\Models\Person;
 use App\Models\Planet;
+use App\Models\Specie;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Http;
 
@@ -32,6 +33,13 @@ Route::get('/planets', function () {
     return view('show-planets', ['planets' => $planets]);
 });
 
+Route::get('/species', function () {
+    $species = cache()->remember('species', now()->addDay(), function () {
+        return Specie::all();
+    });
+
+    return view('show-species', ['species' => $species]);
+});
 
 Route::get('/people/{id}', function ($id) {
     return view('show-person', ['person' => Person::findOrFail($id)]);
