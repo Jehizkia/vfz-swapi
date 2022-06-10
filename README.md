@@ -2,7 +2,7 @@
 
 # Getting started
 
-For this guide I assume you that you have docker installed and using Laravel Sail.
+For this guide I assume you have docker installed and using Laravel Sail.
 If not you replace `sail` with `php` and use laravel valet.
 
 1. Clone the repo
