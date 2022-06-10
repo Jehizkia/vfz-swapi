@@ -45,7 +45,7 @@ class CreateStarWarsUniverse extends Command
         $this->info('Getting all people  👥');
         $allPeople = $this->getAllEntitiesByCategory('people');
 
-        foreach ($allPeople as $key => $person) {
+        foreach ($allPeople as $person) {
             Person::create([
                 'id' => $this->getEntityIdByUrl($person->url),
                 'name' => $person->name,
@@ -66,7 +66,7 @@ class CreateStarWarsUniverse extends Command
         $this->info('Getting all planets 🪐');
         $allPlanets = $this->getAllEntitiesByCategory('planets');
 
-        foreach ($allPlanets as $key => $planet) {
+        foreach ($allPlanets as $planet) {
             $id = $this->getEntityIdByUrl($planet->url);
             Planet::create([
                 'id' => $id,
@@ -90,7 +90,7 @@ class CreateStarWarsUniverse extends Command
         $this->info('Getting all species 👽');
         $allSpecies = $this->getAllEntitiesByCategory('species');
 
-        foreach ($allSpecies as $key => $specie) {
+        foreach ($allSpecies as $specie) {
             Specie::create([
                 'id' => $this->getEntityIdByUrl($specie->url),
                 'name' => $specie->name,
