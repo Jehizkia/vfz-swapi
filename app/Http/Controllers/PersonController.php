@@ -7,7 +7,11 @@ use Illuminate\Http\Request;
 
 class PersonController extends Controller
 {
-    public function show(Request $request, Person $person) {
+    public function index() {
+        return Person::all();
+    }
+
+    public function show(Person $person) {
         return $person;
     }
 }

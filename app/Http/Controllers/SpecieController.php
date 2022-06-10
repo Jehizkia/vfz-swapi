@@ -7,6 +7,10 @@ use Illuminate\Http\Request;
 
 class SpecieController extends Controller
 {
+    public function index() {
+        return Specie::all();
+    }
+
     public function show(Specie $specie) {
         return [
             'detail' => $specie,

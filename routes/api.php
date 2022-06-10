@@ -21,6 +21,11 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+Route::get('/people', [PersonController::class, 'index']);
 Route::get('/people/{person}', [PersonController::class, 'show']);
+
+Route::get('/planets', [PlanetController::class, 'index']);
 Route::get('/planets/{planet}', [PlanetController::class, 'show']);
+
+Route::get('/species', [SpecieController::class, 'index']);
 Route::get('/species/{specie}', [SpecieController::class, 'show']);
