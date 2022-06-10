@@ -1,7 +1,7 @@
 # Swapi assignment
 
 ## Demo video
-https://hiz.stackstorage.com/s/gjKILFohdPJduZ42
+https://hiz.stackstorage.com/s/WbfjT8sTnBdPn0hD
 
 # Getting started
 
